@@ -1,26 +1,64 @@
-import React from 'react';
-import logo from './logo.svg';
+import axios from 'axios';
+import React, {Component} from 'react';
+import 'semantic-ui-css/semantic.min.css';
+import {Button} from 'semantic-ui-react';
+import request from 'superagent';
 import './App.css';
+import Home from './components/Home';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component {
+	state = {
+		image: '',
+		gallery: [],
+		defaultTag: 'kriti'
+	}
+
+	componentDidMount () {
+		axios.get(`https://res.cloudinary.com/ltcloud1/image/list/v1571334056/${this.state.defaultTag}.json`)
+			.then(fetchPhotosResponse => {
+				console.log(fetchPhotosResponse.data.resources)
+				this.setState({gallery: fetchPhotosResponse.data.resources})
+			})
+	}
+
+	onImageDrop (files) {
+		this.setState({uploadedFile: files[0]});
+		this.handleImageUpload(files[0])
+	}
+
+	handleImageUpload (file) {
+		let upload = request.post("https://api.cloudinary.com/v1_1/ltcloud1/image/c_imagga_crop,w_auto,dpr_auto/q_auto:best, f_auto")
+			.field('upload_preset', 'ml_default')
+			.field('file', file)
+		upload.end((uploadError, uploadResponse) => {
+			if (uploadError) {
+				console.error(uploadError);
+			}
+			if (uploadResponse.body.secure_url !== '') {
+				this.setState({image: uploadResponse.body.secure_url});
+			}
+		})
+	}
+
+	uploadWidget () {
+		window.cloudinary.openUploadWidget(
+			{cloud_name: 'ltcloud1', upload_preset: 'ml_default', tags: [`${this.state.defaultTag}`]},
+			function (err, res) {
+				this.setState({gallery: this.state.gallery.concat(res)});
+			}
+		)
+	}
+	render () {
+		return (
+			<div className="main">
+				<div className="FileUpload">
+					<h1>Zine-ish Gallery</h1>
+					<div className="upload">
+						<Button primary floated='right' onClick={this.uploadWidget.bind(this)} className="upload-button">Add New Image!</Button>
+					</div>
+					<Home gallery={this.state.gallery} />
+				</div>
+			</div>
+		)
+	}
 }
-
-export default App;
