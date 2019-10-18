@@ -56,11 +56,11 @@ div.desc {
 
 .upload{
     width: 20%;
-    float: left;
+
 }
 
 .container{
-    padding-top: 50px;
+    padding: 50px;
 }
 
 h1{
