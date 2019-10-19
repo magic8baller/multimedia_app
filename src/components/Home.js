@@ -15,12 +15,8 @@ const Home = ({gallery}) => {
 						let {public_id, created_at} = data;
 						return (
 							<List horizontal>
-								{/* <List.Item> */}
 								<div className='image-holder'>
-									{/* <List.Content> */}
 									<div className="responsive" key={public_id} >
-										{/* <div className="img"> */}
-										{/* <Segment> */}
 										<a target="_blank" href={`https://res.cloudinary.com/ltcloud1/image/upload/v1571334056/${public_id}.jpg`}>
 											<Image publicId={public_id} responsive>
 												<Transformation
@@ -44,19 +40,14 @@ const Home = ({gallery}) => {
 												</div>
 											</div>
 										</div>
-
 									</div>
-
-
-									{/* </List.Content> */}
 								</div>
-								{/* </List.Item> */}
 							</List>
 						)
 					})}
 				</Masonry>
 			</CloudinaryContext>
-			<div className="clearfix"></div>
+			{/* <div className="clearfix"></div> */}
 		</section>
 	)
 }

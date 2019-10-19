@@ -1,16 +1,21 @@
 import axios from 'axios';
 import React, {Component} from 'react';
+// import NavBar from './components/NavBar'
+import {NavBar} from './components/NavBar';
 import 'semantic-ui-css/semantic.min.css';
 import {Button} from 'semantic-ui-react';
 import request from 'superagent';
 import './App.css';
 import Home from './components/Home';
+// import Poems from './components/Poems';
+import data from './db.js';
 
 export default class App extends Component {
 	state = {
 		image: '',
 		gallery: [],
-		defaultTag: 'kriti',
+		defaultTag: 'bar',
+		poems: data.poems,
 
 	}
 
@@ -53,17 +58,22 @@ export default class App extends Component {
 	}
 	render () {
 		return (
-			<div className="main">
+			<main className="main">
+				<NavBar/>
 				<div className="FileUpload">
 					<h1>Zine-ish Gallery</h1>
 					<div className="upload">
 						<Button primary onClick={this.uploadWidget.bind(this)} className="upload-button">Add New Image!</Button>
 					</div>
+					<div className="upload">
+						{/* <Link path='/poems' component={Poems}>Poems</Link> */}
+					</div>
 					<br />
 					<br />
 					<Home gallery={this.state.gallery} />
 				</div>
-			</div>
+				{/* <Poems images={this.state.images}/> */}
+			</main>
 		)
 	}
 }

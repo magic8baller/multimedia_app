@@ -1,5 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import {BrowserRouter} from 'react-router-dom';
+// import App from './App';
+import Routes from './Routes';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const routing = (
+	<BrowserRouter>
+		<Routes />
+	</BrowserRouter>
+)
+ReactDOM.render(routing, document.getElementById('root'));

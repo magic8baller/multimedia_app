@@ -146,9 +146,14 @@
     }
 
     #entry-list .form-button {
-        margin-top: 10px;
+			margin-top: 10px;
     }
-}
+	}
+						/* .clearfix:after {
+								content: "";
+								display: table;
+								clear: both;
+						} */
 /* body{
     background: #e1e1e1;
 }
@@ -194,11 +199,6 @@ div.desc {
     }
 }
 
-.clearfix:after {
-    content: "";
-    display: table;
-    clear: both;
-}
 
 .gallery{
     width: 80%;
